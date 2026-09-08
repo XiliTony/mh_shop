@@ -17,27 +17,27 @@ class _HomePageState extends State<HomePage> {
   final List<Map<String, String>> _tabList = [
     // 首页标签
     {
-    "icon": 'lib/assets/ic_public_home_normal.png',        // 未选中状态图标
-    "active_icon": 'lib/assets/ic_public_home_active.png', // 选中状态图标
-    "name": '首页',                                         // 标签名称
+      "icon": 'lib/assets/ic_public_home_normal.png', // 未选中状态图标
+      "active_icon": 'lib/assets/ic_public_home_active.png', // 选中状态图标
+      "name": '首页', // 标签名称
     },
     // 分类标签
     {
-    "icon": 'lib/assets/ic_public_pro_normal.png',
-    "active_icon": 'lib/assets/ic_public_pro_active.png',
-    "name": '分类',
+      "icon": 'lib/assets/ic_public_pro_normal.png',
+      "active_icon": 'lib/assets/ic_public_pro_active.png',
+      "name": '分类',
     },
     // 购物车标签
     {
-    "icon": 'lib/assets/ic_public_cart_normal.png',
-    "active_icon": 'lib/assets/ic_public_cart_active.png',
-    "name": '购物车',
+      "icon": 'lib/assets/ic_public_cart_normal.png',
+      "active_icon": 'lib/assets/ic_public_cart_active.png',
+      "name": '购物车',
     },
     // 我的标签
     {
-    "icon": 'lib/assets/ic_public_my_normal.png',
-    "active_icon": 'lib/assets/ic_public_my_active.png',
-    "name": '我的',
+      "icon": 'lib/assets/ic_public_my_normal.png',
+      "active_icon": 'lib/assets/ic_public_my_active.png',
+      "name": '我的',
     },
   ];
 
@@ -46,25 +46,21 @@ class _HomePageState extends State<HomePage> {
   List<BottomNavigationBarItem> _getTabBarWidget() {
     return List.generate(_tabList.length, (int index) {
       return BottomNavigationBarItem(
-        icon: Image.asset(
-          _tabList[index]["icon"]!,
-          width: 30,
-          height: 30
-        ),
+        icon: Image.asset(_tabList[index]["icon"]!, width: 30, height: 30),
         activeIcon: Image.asset(
-          _tabList[index]["icon"]!,
+          _tabList[index]["active_icon"]!,
           width: 30,
-          height: 30
+          height: 30,
         ),
-        label: _tabList[index]["name"]
-        );
+        label: _tabList[index]["name"],
+      );
     });
   }
 
   List<Widget> _getChildren() {
     return [MainView(), CategoryView(), CartView(), MineView()];
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,8 +68,8 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: IndexedStack(
           index: _currentIndex,
-          children: _getChildren() // 放置四个组件
-        )
+          children: _getChildren(), // 放置四个组件
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.black,
@@ -85,7 +81,7 @@ class _HomePageState extends State<HomePage> {
           });
         },
         currentIndex: _currentIndex,
-        items: _getTabBarWidget()
+        items: _getTabBarWidget(),
       ),
     );
   }
