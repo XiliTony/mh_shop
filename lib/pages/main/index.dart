@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mh_shop/api/home.dart';
 import 'package:mh_shop/components/Home/MhCategory.dart';
 import 'package:mh_shop/components/Home/MhHot.dart';
 import 'package:mh_shop/components/Home/MhMoreList.dart';
@@ -14,25 +15,25 @@ class MainView extends StatefulWidget {
 }
 
 class _MainViewState extends State<MainView> {
-  final List<BannerItem> _bannerList = [
-    BannerItem(
-      id: "1",
-      imgUrl: "https://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/meituan/1.jpg",
-    ),
-    BannerItem(
-      id: "2",
-      imgUrl: "https://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/meituan/2.png",
-    ),
-    BannerItem(
-      id: "3",
-      imgUrl: "https://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/meituan/3.jpg",
-    ),
+  List<BannerItem> _bannerList = [
+    // BannerItem(
+    //   id: "1",
+    //   imgUrl: "https://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/meituan/1.jpg",
+    // ),
+    // BannerItem(
+    //   id: "2",
+    //   imgUrl: "https://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/meituan/2.png",
+    // ),
+    // BannerItem(
+    //   id: "3",
+    //   imgUrl: "https://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/meituan/3.jpg",
+    // ),
   ];
 
   List<Widget> _getScrollChildren() {
     return [
       // 包裹普通widget的sliver家族的组件
-      SliverToBoxAdapter(child: MhSlider(bannerList: _bannerList,)), // 轮播图组件
+      SliverToBoxAdapter(child: MhSlider(bannerList: _bannerList)), // 轮播图组件
       // 放置分类组件
       SliverToBoxAdapter(child: SizedBox(height: 10)),
       // SliverGrid和SliverList只能纵向排列
@@ -56,6 +57,18 @@ class _MainViewState extends State<MainView> {
       SliverToBoxAdapter(child: SizedBox(height: 10)),
       MhMoreList(), // 无限滚动列表
     ];
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getBannderList();
+  }
+
+  void _getBannderList() async {
+    _bannerList = await getBannerListAPI();
+    setState(() {});
   }
 
   @override
