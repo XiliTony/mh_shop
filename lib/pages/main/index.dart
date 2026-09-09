@@ -29,6 +29,7 @@ class _MainViewState extends State<MainView> {
     //   imgUrl: "https://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/meituan/3.jpg",
     // ),
   ];
+  List<CategoryItem> _categoryList = [];
 
   List<Widget> _getScrollChildren() {
     return [
@@ -37,7 +38,7 @@ class _MainViewState extends State<MainView> {
       // 放置分类组件
       SliverToBoxAdapter(child: SizedBox(height: 10)),
       // SliverGrid和SliverList只能纵向排列
-      SliverToBoxAdapter(child: MhCategory()), // 分类组件
+      SliverToBoxAdapter(child: MhCategory(categoryList: _categoryList)), // 分类组件
       SliverToBoxAdapter(child: SizedBox(height: 10)),
       SliverToBoxAdapter(child: MhSuggestion()),
       SliverToBoxAdapter(child: SizedBox(height: 10)),
@@ -64,10 +65,18 @@ class _MainViewState extends State<MainView> {
     // TODO: implement initState
     super.initState();
     _getBannderList();
+    _getCategoryList();
   }
 
+  // 获取轮播图列表
   void _getBannderList() async {
     _bannerList = await getBannerListAPI();
+    setState(() {});
+  }
+  
+  // 获取分类列表
+  void _getCategoryList() async {
+    _categoryList = await getCategoryListAPI();
     setState(() {});
   }
 
