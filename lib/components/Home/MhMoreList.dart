@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MhMoreList extends StatefulWidget {
-  MhMoreList({Key? key}) : super(key: key);
+  const MhMoreList({super.key});
 
   @override
   _MhMoreListState createState() => _MhMoreListState();
@@ -20,9 +20,9 @@ class _MhMoreListState extends State<MhMoreList> {
       ),
       itemBuilder: (BuildContext context, int index) {
         return Container(
-          child: Text("商品", style: TextStyle(color: Colors.white)),
           color: Colors.blue,
           alignment: Alignment.center,
+          child: Text("商品", style: TextStyle(color: Colors.white)),
         );
       },
     );

@@ -4,14 +4,14 @@ import 'package:mh_shop/viewmodels/home.dart';
 
 class MhSlider extends StatefulWidget {
   final List<BannerItem> bannerList;
-  MhSlider({Key? key, required this.bannerList}) : super(key: key);
+  const MhSlider({super.key, required this.bannerList});
 
   @override
   _MhSliderState createState() => _MhSliderState();
 }
 
 class _MhSliderState extends State<MhSlider> {
-  CarouselSliderController _controller =
+  final CarouselSliderController _controller =
       CarouselSliderController(); // 控制轮播图跳转的控制器
   int _currentIndex = 0;
   Widget _getSlider() {

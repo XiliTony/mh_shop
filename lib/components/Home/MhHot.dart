@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MhHot extends StatefulWidget {
-  MhHot({Key? key}) : super(key: key);
+  const MhHot({super.key});
 
   @override
   _MhHotState createState() => _MhHotState();

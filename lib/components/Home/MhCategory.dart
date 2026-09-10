@@ -3,7 +3,7 @@ import 'package:mh_shop/viewmodels/home.dart';
 
 class MhCategory extends StatefulWidget {
   final List<CategoryItem> categoryList;
-  MhCategory({Key? key, required this.categoryList}) : super(key: key);
+  const MhCategory({super.key, required this.categoryList});
 
   @override
   _MhCategoryState createState() => _MhCategoryState();

@@ -40,7 +40,7 @@ class _MainViewState extends State<MainView> {
       // SliverGrid和SliverList只能纵向排列
       SliverToBoxAdapter(child: MhCategory(categoryList: _categoryList)), // 分类组件
       SliverToBoxAdapter(child: SizedBox(height: 10)),
-      SliverToBoxAdapter(child: MhSuggestion()),
+      SliverToBoxAdapter(child: MhSuggestion(specialRecommend: _specialRecommend)),
       SliverToBoxAdapter(child: SizedBox(height: 10)),
       SliverToBoxAdapter(
         child: Padding(
@@ -60,12 +60,26 @@ class _MainViewState extends State<MainView> {
     ];
   }
 
+  // 特惠推荐
+  SpecialRecommend _specialRecommend = SpecialRecommend(
+    id: "",
+    title: "",
+    subTypes: []
+  );
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _getBannderList();
     _getCategoryList();
+    _getSpecialRecommend();
+  }
+
+  // 获取特惠推荐
+  void _getSpecialRecommend() async {
+    _specialRecommend = await getSpecialRecommendAPI();
+    setState(() {});
   }
 
   // 获取轮播图列表
