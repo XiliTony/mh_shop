@@ -38,9 +38,13 @@ class _MainViewState extends State<MainView> {
       // 放置分类组件
       SliverToBoxAdapter(child: SizedBox(height: 10)),
       // SliverGrid和SliverList只能纵向排列
-      SliverToBoxAdapter(child: MhCategory(categoryList: _categoryList)), // 分类组件
+      SliverToBoxAdapter(
+        child: MhCategory(categoryList: _categoryList),
+      ), // 分类组件
       SliverToBoxAdapter(child: SizedBox(height: 10)),
-      SliverToBoxAdapter(child: MhSuggestion(specialRecommend: _specialRecommend)),
+      SliverToBoxAdapter(
+        child: MhSuggestion(specialRecommend: _specialRecommend),
+      ),
       SliverToBoxAdapter(child: SizedBox(height: 10)),
       SliverToBoxAdapter(
         child: Padding(
@@ -48,9 +52,13 @@ class _MainViewState extends State<MainView> {
           child: Flex(
             direction: Axis.horizontal,
             children: [
-              Expanded(child: MhHot()),
+              Expanded(
+                child: MhHot(result: _inVogueResult, type: "hot"),
+              ),
               SizedBox(width: 10),
-              Expanded(child: MhHot()),
+              Expanded(
+                child: MhHot(result: _oneStopResult, type: "step"),
+              ),
             ],
           ),
         ),
@@ -64,8 +72,33 @@ class _MainViewState extends State<MainView> {
   SpecialRecommend _specialRecommend = SpecialRecommend(
     id: "",
     title: "",
-    subTypes: []
+    subTypes: [],
   );
+
+  // 热榜推荐
+  SpecialRecommend _inVogueResult = SpecialRecommend(
+    id: "",
+    title: "",
+    subTypes: [],
+  );
+  // 一站式推荐
+  SpecialRecommend _oneStopResult = SpecialRecommend(
+    id: "",
+    title: "",
+    subTypes: [],
+  );
+
+  // 获取热榜推荐列表
+  void _getInVogueList() async {
+    _inVogueResult = await getInVogueListAPI();
+    setState(() {});
+  }
+
+  // 获取一站式推荐列表
+  void _getOneStopList() async {
+    _oneStopResult = await getOneStopListAPI();
+    setState(() {});
+  }
 
   @override
   void initState() {
@@ -74,6 +107,8 @@ class _MainViewState extends State<MainView> {
     _getBannderList();
     _getCategoryList();
     _getSpecialRecommend();
+    _getInVogueList();
+    _getOneStopList();
   }
 
   // 获取特惠推荐
@@ -87,7 +122,7 @@ class _MainViewState extends State<MainView> {
     _bannerList = await getBannerListAPI();
     setState(() {});
   }
-  
+
   // 获取分类列表
   void _getCategoryList() async {
     _categoryList = await getCategoryListAPI();
