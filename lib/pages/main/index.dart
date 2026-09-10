@@ -31,6 +31,10 @@ class _MainViewState extends State<MainView> {
   ];
   List<CategoryItem> _categoryList = [];
 
+  // 推荐列表
+  List<GoodDetailItem> _recommendList = [];
+
+
   List<Widget> _getScrollChildren() {
     return [
       // 包裹普通widget的sliver家族的组件
@@ -64,7 +68,7 @@ class _MainViewState extends State<MainView> {
         ),
       ),
       SliverToBoxAdapter(child: SizedBox(height: 10)),
-      MhMoreList(), // 无限滚动列表
+      MhMoreList(recommendList: _recommendList), // 无限滚动列表
     ];
   }
 
@@ -100,6 +104,12 @@ class _MainViewState extends State<MainView> {
     setState(() {});
   }
 
+  // 获取推荐列表
+  void _getRecommendList() async {
+    _recommendList = await getRecommendListAPI({"limit": 10});
+    setState(() {});
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -109,6 +119,7 @@ class _MainViewState extends State<MainView> {
     _getSpecialRecommend();
     _getInVogueList();
     _getOneStopList();
+    _getRecommendList();
   }
 
   // 获取特惠推荐

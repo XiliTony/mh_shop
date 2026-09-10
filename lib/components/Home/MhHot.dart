@@ -7,7 +7,7 @@ class MhHot extends StatefulWidget {
   // 类型
   final String type;
   // 一站式推荐
-  MhHot({Key? key, required this.result, required this.type}) : super(key: key);
+  const MhHot({super.key, required this.result, required this.type});
 
   @override
   _MhHotState createState() => _MhHotState();
