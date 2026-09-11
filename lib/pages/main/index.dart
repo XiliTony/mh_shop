@@ -34,7 +34,6 @@ class _MainViewState extends State<MainView> {
   // 推荐列表
   List<GoodDetailItem> _recommendList = [];
 
-
   List<Widget> _getScrollChildren() {
     return [
       // 包裹普通widget的sliver家族的组件
@@ -104,10 +103,30 @@ class _MainViewState extends State<MainView> {
     setState(() {});
   }
 
+  // 页码
+  int _page = 1;
+  bool _isLoading = false; // 当前正在加载状态
+  bool _hasMore = true; // 是否还有下一页
+
   // 获取推荐列表
   void _getRecommendList() async {
-    _recommendList = await getRecommendListAPI({"limit": 10});
+    // 当已经有请求正在加载 或者已经没有下一页了 就放弃请求
+    if (_isLoading || !_hasMore) {
+      return;
+    }
+    _isLoading = true; // 占住位置
+    int requestLimit = _page * 8;
+    _recommendList = await getRecommendListAPI({"limit": requestLimit});
+    _isLoading = false; // 松开位置
     setState(() {});
+
+    // 我要10条 你给10条 说明我要的你都给了 接着认为还有下一页
+    // 我要10条 你给9条
+    if (_recommendList.length < requestLimit) {
+      _hasMore = false;
+      return;
+    }
+    _page++; // _page +=1;
   }
 
   @override
@@ -120,6 +139,17 @@ class _MainViewState extends State<MainView> {
     _getInVogueList();
     _getOneStopList();
     _getRecommendList();
+    _registerEvent();
+  }
+
+  // 监听滚动到底部的事件
+  void _registerEvent() {
+    _controller.addListener(() {
+      if (_controller.position.pixels >=
+          (_controller.position.maxScrollExtent - 50)) {
+        _getRecommendList();
+      }
+    });
   }
 
   // 获取特惠推荐
@@ -140,8 +170,12 @@ class _MainViewState extends State<MainView> {
     setState(() {});
   }
 
+  final ScrollController _controller = ScrollController();
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(slivers: _getScrollChildren()); // sliver家族的内容
+    return CustomScrollView(
+      slivers: _getScrollChildren(),
+      controller: _controller, // 绑定控制器
+    ); // sliver家族的内容
   }
 }
