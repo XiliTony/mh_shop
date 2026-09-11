@@ -1,4 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:mh_shop/api/user.dart';
 import 'package:mh_shop/utils/ToastUtils.dart';
 
 class LoginPage extends StatefulWidget {
@@ -42,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
   // 用户密码Widget
   Widget _buildCodeTextField() {
     return TextFormField(
-            validator: (value) {
+      validator: (value) {
         if (value == null || value.isEmpty) {
           return "密码不能为空";
         }
@@ -67,6 +69,21 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  _login() async {
+    // 调用登录接口
+    try {
+      final res = await loginAPI({
+        "account": _phoneController.text,
+        "password": _codeController.text,
+      });
+      print(res); // 用户信息
+      ToastUtils.showToast(context, "登录成功");
+      Navigator.pop(context); // 返回上个页面
+    } catch (e) {
+      ToastUtils.showToast(context, (e as DioException).message);
+    }
+  }
+
   // 登录按钮Widget
   Widget _buildLoginButton() {
     return SizedBox(
@@ -79,6 +96,7 @@ class _LoginPageState extends State<LoginPage> {
             // 进行勾选框的判断
             if (_isChecked) {
               // 校验通过
+              _login();
             } else {
               // 提示请勾选用户协议
               ToastUtils.showToast(context, "请勾选用户协议");
