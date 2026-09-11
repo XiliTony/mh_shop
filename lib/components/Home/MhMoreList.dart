@@ -5,7 +5,7 @@ class MhMoreList extends StatefulWidget {
   // 推荐列表
   final List<GoodDetailItem> recommendList;
 
-  const MhMoreList({super.key, required this.recommendList});
+  MhMoreList({Key? key, required this.recommendList}) : super(key: key);
 
   @override
   _MhMoreListState createState() => _MhMoreListState();
@@ -19,7 +19,7 @@ class _MhMoreListState extends State<MhMoreList> {
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: AspectRatio(
-              aspectRatio: 1.0,
+              aspectRatio: 1,
               child: Image.network(
                 widget.recommendList[index].picture,
                 fit: BoxFit.cover,
@@ -39,7 +39,7 @@ class _MhMoreListState extends State<MhMoreList> {
               widget.recommendList[index].name,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(color: Colors.black, fontSize: 20),
+              style: TextStyle(color: Colors.black, fontSize: 16),
             ),
           ),
           SizedBox(height: 6),
@@ -56,22 +56,22 @@ class _MhMoreListState extends State<MhMoreList> {
                       fontSize: 20,
                       fontWeight: FontWeight.w800,
                     ),
-                    children: [
-                      TextSpan(text: " "),
-                      TextSpan(
-                        text: widget.recommendList[index].price,
-                        style: TextStyle(
-                          decoration: TextDecoration.lineThrough,
-                          color: Colors.grey,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
+                    // children: [
+                    //   TextSpan(text: " "),
+                    //   TextSpan(
+                    //     text: "${widget.recommendList[index].price}",
+                    //     style: TextStyle(
+                    //       decoration: TextDecoration.lineThrough,
+                    //       color: Colors.grey,
+                    //       fontSize: 12,
+                    //     ),
+                    //   ),
+                    // ],
                   ),
                 ),
                 Text(
                   "${widget.recommendList[index].payCount}人付款",
-                  style: TextStyle(color: Colors.grey),
+                  style: TextStyle(color: Colors.grey, fontSize: 12),
                 ),
               ],
             ),
@@ -92,7 +92,7 @@ class _MhMoreListState extends State<MhMoreList> {
             crossAxisCount: 2,
             mainAxisSpacing: 10,
             crossAxisSpacing: 10,
-            childAspectRatio: 0.65,
+            childAspectRatio: 0.7,
           ),
       itemBuilder: (BuildContext context, int index) {
         return Padding(
