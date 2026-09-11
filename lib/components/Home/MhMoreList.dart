@@ -92,7 +92,7 @@ class _MhMoreListState extends State<MhMoreList> {
             crossAxisCount: 2,
             mainAxisSpacing: 10,
             crossAxisSpacing: 10,
-            childAspectRatio: 0.66,
+            childAspectRatio: 0.65,
           ),
       itemBuilder: (BuildContext context, int index) {
         return Padding(
