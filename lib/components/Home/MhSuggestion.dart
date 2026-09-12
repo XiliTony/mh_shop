@@ -71,7 +71,7 @@ class _MhSuggestionState extends State<MhSuggestion> {
                   return Image.asset("lib/assets/home_cmd_inner.png");
                 },
                 list[index].picture,
-                width: 100,
+                // width: 100,
                 height: 140,
                 fit: BoxFit.cover,
               ),
@@ -116,8 +116,10 @@ class _MhSuggestionState extends State<MhSuggestion> {
             Row(
               children: [
                 _buildLeft(),
+                SizedBox(width: 10),
                 Expanded(
                   child: Row(
+                    spacing: 10,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: _getChildrenList(),
                   ),
