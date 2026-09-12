@@ -5,6 +5,7 @@ import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:mh_shop/api/user.dart';
 import 'package:mh_shop/stores/TokenManager.dart';
 import 'package:mh_shop/stores/UserController.dart';
+import 'package:mh_shop/utils/LoadingDialog.dart';
 import 'package:mh_shop/utils/ToastUtils.dart';
 
 class LoginPage extends StatefulWidget {
@@ -18,7 +19,7 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController _phoneController = TextEditingController(); // 账号控制器
   TextEditingController _codeController = TextEditingController(); // 密码控制器
   final UserController _userController = Get.find<UserController>();
-  
+
   // 用户账号Widget
   Widget _buildPhoneTextField() {
     return TextFormField(
@@ -78,6 +79,7 @@ class _LoginPageState extends State<LoginPage> {
   _login() async {
     // 调用登录接口
     try {
+      LoadingDialog.show(context, message: "努力登录中");
       final res = await loginAPI({
         "account": _phoneController.text,
         "password": _codeController.text,
@@ -90,6 +92,8 @@ class _LoginPageState extends State<LoginPage> {
       Navigator.pop(context); // 返回上个页面
     } catch (e) {
       ToastUtils.showToast(context, (e as DioException).message);
+    } finally {
+      LoadingDialog.hide(context);
     }
   }
 

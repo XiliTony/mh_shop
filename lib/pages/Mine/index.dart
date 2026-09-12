@@ -5,8 +5,10 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:mh_shop/api/main.dart';
 import 'package:mh_shop/components/Home/MhMoreList.dart';
 import 'package:mh_shop/components/Mine/MhGuess.dart';
+import 'package:mh_shop/stores/TokenManager.dart';
 import 'package:mh_shop/stores/UserController.dart';
 import 'package:mh_shop/viewmodels/home.dart';
+import 'package:mh_shop/viewmodels/user.dart';
 
 class MineView extends StatefulWidget {
   MineView({Key? key}) : super(key: key);
@@ -17,6 +19,48 @@ class MineView extends StatefulWidget {
 
 class _MineViewState extends State<MineView> {
   final UserController _userController = Get.find();
+  // 返回退出登录的元素
+  Widget _getLogout() {
+    return _userController.user.value.id.isNotEmpty
+        ? Expanded(
+            child: GestureDetector(
+              onTap: () {
+                // 弹出确认提示框
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text("提示"),
+                      content: Text("确认退出登录吗"),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text("取消"),
+                        ),
+                        TextButton(
+                          onPressed: () async {
+                            // 清除Getx 删除token
+                            await tokenManager.removeToken();
+                            // Getx内存数据
+                            _userController.updateUserInfo(
+                              UserInfo.fromJSON({}),
+                            );
+                            Navigator.pop(context);
+                          },
+                          child: Text("确认"),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+              child: Text("退出", textAlign: TextAlign.end),
+            ), // GestureDetector
+          ) // Expanded
+        : Text("");
+  }
 
   Widget _buildHeader() {
     return Container(
@@ -33,10 +77,9 @@ class _MineViewState extends State<MineView> {
           Obx(() {
             return CircleAvatar(
               radius: 26,
-              backgroundImage:
-                  _userController.user.value.avatar.isNotEmpty
-                      ? NetworkImage(_userController.user.value.avatar)
-                      : const AssetImage('lib/assets/goods_avatar.png'),
+              backgroundImage: _userController.user.value.avatar.isNotEmpty
+                  ? NetworkImage(_userController.user.value.avatar)
+                  : const AssetImage('lib/assets/goods_avatar.png'),
               backgroundColor: Colors.white,
             );
           }),
@@ -68,6 +111,7 @@ class _MineViewState extends State<MineView> {
               ],
             ),
           ),
+          Obx(() => _getLogout()),
         ],
       ),
     );
