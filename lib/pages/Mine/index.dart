@@ -286,7 +286,7 @@ class _MineViewState extends State<MineView> {
       return;
     }
     // 数据一共有多少页 50页
-    _params["pages"]++; // 针对页码进行++
+    _params["page"]++; // 针对页码进行++
   }
 
   final ScrollController _controller = ScrollController();
